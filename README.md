@@ -38,7 +38,7 @@ Clone main branch to c:\interview
 
 > Controllers/WeatherController.cs
 
-Create a REST API to check weather for oronto, Vancouver and Calgary, and return the city with the lowest temperature. 
+Create a REST API to check weather for Toronto, Vancouver and Calgary, and return the city with the lowest temperature. 
 
 Request
 ```
@@ -51,9 +51,18 @@ Response
     "temperature": "29"
 }
 ```
+## Task 3 - LINQ
+> Open \Weather-API\Weather-API.sln
+
+> Controllers/QueryController.cs
+
+Finish methods in QueryControler.
+
+![DB](https://res.cloudinary.com/dzhu2005/image/upload/v1685376902/email%20template/Email3/t4Ald19U7h.png)
 
 
-## Task 3 VueJS
+
+## Task 4 VueJS
 > Open \weather-ui
 
 Create a page to show the city with the lowest temperature. (Consuming goweather.herokuapp.com API direct, without calling API created on Task 2)
