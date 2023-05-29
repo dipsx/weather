@@ -29,13 +29,20 @@ Response
 }
 ```
 
+
 ## Task 1
-Create a REST API to check weather for Toronto, Vancouver and Calgary, and return the coldest city.
+Clone main branch to c:\interview
+
+## Task 2 - ASP.NET API
+> Open \Weather-API\Weather-API.sln
+
+> Controllers/WeatherController.cs
+
+Create a REST API to check weather for oronto, Vancouver and Calgary, and return the city with the lowest temperature. 
 
 Request
 ```
-curl http://localhost:63013/api/weather
-
+GET http://localhost:63013/api/weather
 ```
 Response
 ```json
@@ -45,14 +52,12 @@ Response
 }
 ```
 
-1. Clone main branch to c:\Interview
-2. Open /weather/Weather-API/Weather-API.sln
-3. Finish Controllers/WeatherController.cs
 
-## Task 2
-Show coldest city in VueJS.
+## Task 3 VueJS
+> Open \weather-ui
 
-1. Open /weather-ui
-2. Finish Vue project
+Create a page to show the city with the lowest temperature. (Consuming goweather.herokuapp.com API direct, without calling API created on Task 2)
 
+
+ 
 
