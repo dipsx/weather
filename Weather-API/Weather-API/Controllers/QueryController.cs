@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
-namespace Weather_API.Controllers
-{
-    public class QueryController : ApiController
-    {
+namespace Weather_API.Controllers {
+    [RoutePrefix("api/query")]
+    public class QueryController : ApiController {
         private List<UserModel> _Users;
         private List<DeptModel> _Depts;
-         
+
         public QueryController() {
             _Users = new List<UserModel>
             {
@@ -33,15 +30,17 @@ namespace Weather_API.Controllers
         }
 
         // Increase salary by 10%
-        public void IncreaseSalary()
-        {
-
+        [HttpGet]
+        [Route("IncreaseSalary")]
+        public void IncreaseSalary() {
+            _Users.ForEach(x => x.Salary *= 1.1);
         }
 
         // Return users has DOB in January
-        public List<UserModel> BirthdayInJanuary()
-        {
-            return new List<UserModel>();
+        [HttpGet]
+        [Route("BirthdayInJanuary")]
+        public List<UserModel> BirthdayInJanuary() {
+            return _Users.Where(x => x.DOB?.Month == 1).ToList();
         }
 
 
@@ -53,10 +52,17 @@ namespace Weather_API.Controllers
             5       emp5    2           emp2
             6       emp6    2           emp2         
          */
-        public void DisplayManagers()
-        {
-
-
+        [HttpGet]
+        [Route("DisplayManagers")]
+        public void DisplayManagers() {
+            System.Diagnostics.Debug.WriteLine("empId\t empName\t managerId\t managerName");
+            _Users
+                .Where(u => u.ManagerID != null)
+                .ForEach(u => {
+                    var manager = _Users.FirstOrDefault(su => su.EmpId == u.ManagerID);
+                    if (manager != null)
+                        System.Diagnostics.Debug.WriteLine($"{u.EmpId,-5}\t {u.EmpName,-8}\t {manager.EmpId,-10}\t {manager.EmpName}");
+                });
         }
 
 
@@ -66,8 +72,24 @@ namespace Weather_API.Controllers
             1	    emp1	Edit,View,Create
             2	    emp2	View,Delete
          */
-        public void DisplayPermission()
-        {
+        [HttpGet]
+        [Route("DisplayPermission")]
+        public void DisplayPermission() {
+            System.Diagnostics.Debug.WriteLine("empId\t empName\t permissions");
+            _Users
+                .Select(u => u.ManagerID)
+                .Where(mId => mId != null)
+                .Distinct()
+                .Select(mId => _Users.FirstOrDefault(su => su.EmpId == mId))
+                .ForEach(manager => {
+                    var permissions = _Depts
+                        .Where(d => d.DeptId == manager.DeptId)
+                        .Select(d => d.Permission)
+                        .ToList();
+                    var permStr = string.Join(",", permissions);
+                    if (manager != null)
+                        System.Diagnostics.Debug.WriteLine($"{manager.EmpId,-5}\t {manager.EmpName,-8}\t {permStr}");
+                });
 
         }
 
